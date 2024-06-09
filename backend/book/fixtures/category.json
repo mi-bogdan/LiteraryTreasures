@@ -1,0 +1,18 @@
+[
+    {
+      "model": "book.Category",
+      "pk": 1,
+      "fields": {
+        "title": "category_1",
+        "parent": null
+      }
+    },
+    {
+      "model": "book.Category",
+      "pk": 2,
+      "fields": {
+        "title": "category_2",
+        "parent": 1
+      }
+    }
+  ]
