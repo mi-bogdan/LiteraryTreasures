@@ -5,7 +5,13 @@ from django.urls import include, path
 
 from .yasg import urlpatterns as doc_urls
 
-urlpatterns = [path("admin/", admin.site.urls), path("api/v1/", include("book.urls"))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/v1/", include("book.urls")),
+    path("", include("authentications.urls")),
+    path("api/v1/", include("rating.urls")),
+    path("api/v1/", include("reviews.urls")),
+]
 
 
 # urls для swagger

@@ -1,12 +1,11 @@
 from email.policy import default
 from typing import Any
 
-from django.db.models import Avg
 from rating.models import Rating
 from rest_framework import serializers
 from reviews.models import Reviews
 
-from .models import Book, Category
+from .models import Book, Category, ImageBook
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -55,3 +54,11 @@ class DeteilBookSerializer(serializers.ModelSerializer):
             "review_count",
             "average_rating",
         )
+
+
+class ImageBookSerializer(serializers.ModelSerializer):
+    """Сериализация изображения к книгам"""
+
+    class Meta:
+        model = ImageBook
+        fields = "__all__"

@@ -9,11 +9,18 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 
 from .filters import BookFilters
-from .models import Book, Category
-from .serializers import CategorySerializer, DeteilBookSerializer, ListBookSerializer
+from .models import Book, Category, ImageBook
+from .serializers import (
+    CategorySerializer,
+    DeteilBookSerializer,
+    ImageBookSerializer,
+    ListBookSerializer,
+)
 
 
 class BookViewSet(MixedPermissionSerializer, viewsets.ReadOnlyModelViewSet):
+    """Вывод книг"""
+
     pagination_class = BooKResultsSetPagination
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_class = BookFilters
@@ -36,5 +43,15 @@ class BookViewSet(MixedPermissionSerializer, viewsets.ReadOnlyModelViewSet):
 
 
 class ListCategoryView(generics.ListAPIView):
+    """Список категорий"""
+
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+
+
+class ListImageBookView(generics.ListAPIView):
+    serializer_class = ImageBookSerializer
+
+    def get_queryset(self):
+        book_id = self.kwargs["id"]
+        return ImageBook.objects.filter(book_id=book_id)
