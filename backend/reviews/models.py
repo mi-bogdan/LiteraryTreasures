@@ -9,7 +9,6 @@ class Reviews(models.Model):
 
     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
     book = models.ForeignKey(Book, verbose_name="Книга", on_delete=models.CASCADE)
-
     dignities = models.CharField(verbose_name="Достоиства", blank=True, max_length=250)
     disadvantages = models.CharField(verbose_name="Недостатки", blank=True, max_length=250)
     comments = models.TextField(verbose_name="Комментарий")
@@ -23,3 +22,6 @@ class Reviews(models.Model):
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
         db_table = "raviews"
+
+
+

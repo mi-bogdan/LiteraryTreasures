@@ -46,7 +46,9 @@ class ListCategoryView(generics.ListAPIView):
     """Список категорий"""
 
     serializer_class = CategorySerializer
-    queryset = Category.objects.all()
+
+    def get_queryset(self) -> BaseManager[Category]:
+        return Category.objects.filter(parent__isnull=True)
 
 
 class ListImageBookView(generics.ListAPIView):

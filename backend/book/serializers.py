@@ -1,9 +1,6 @@
-from email.policy import default
 from typing import Any
 
-from rating.models import Rating
 from rest_framework import serializers
-from reviews.models import Reviews
 
 from .models import Book, Category, ImageBook
 
