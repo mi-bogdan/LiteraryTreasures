@@ -8,3 +8,7 @@ class ReviewsSerializer(serializers.ModelSerializer):
         model = Reviews
         fields = "__all__"
         read_only_fields = ["user", "create_at"]
+
+    # def validate(self, data):
+    #     pass
+    #     return data
