@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "rest_framework",
     "corsheaders",
     "simple_history",
@@ -40,10 +41,13 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+
     "book.apps.BookConfig",
     "rating.apps.RatingConfig",
     "reviews.apps.ReviewsConfig",
     "authentications.apps.AuthenticationsConfig",
+    "favourites.apps.FavouritesConfig",
+    "cart.apps.CartConfig",
 ]
 
 MIDDLEWARE = [

@@ -9,5 +9,5 @@ api_router.register(r"book", BookViewSet, basename="book")
 urlpatterns = [
     path("", include(api_router.urls)),
     path("category_list/", ListCategoryView.as_view(), name="category_list"),
-    path("books/<int:id>/images/", ListImageBookView.as_view(), name="list-image-book"),
+    path("images/<int:id>/", ListImageBookView.as_view(), name="list-image-book"),
 ]

@@ -1,5 +1,6 @@
 
 from django.db.models.manager import BaseManager
+from django.core.cache import cache
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -14,7 +15,7 @@ FORBIDDEN_WORDS = load_forbidden_words()
 
 class CreateReviewView(generics.CreateAPIView):
     """Создание отзыва к книгам"""
-    
+
     queryset = Reviews.objects.all()
     serializer_class = ReviewsSerializer
     permission_classes = [IsAuthenticated]
@@ -32,7 +33,12 @@ class CreateReviewView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        instance = serializer.save(user=self.request.user)
+        # Удаляем кеш для соответствующей книги
+        cache_key = f'list_reviews_{instance.book.id}'
+        cache.delete(cache_key)
+
+        return instance
 
 
 class ListReviewsView(generics.ListAPIView):
@@ -43,4 +49,11 @@ class ListReviewsView(generics.ListAPIView):
 
     def get_queryset(self) -> BaseManager[Reviews]:
         book_id = self.kwargs['book_id']
-        return Reviews.objects.filter(book=book_id)
+        cache_key = f'list_reviews_{book_id}'
+        cache_data = cache.get(cache_key)
+        if not cache_data:
+            queryset = Reviews.objects.filter(book=book_id).select_related('user')
+            serializer = self.get_serializer(queryset, many=True)
+            cache_data = serializer.data
+            cache.set(cache_key, cache_data, timeout=60 * 15)
+        return cache_data

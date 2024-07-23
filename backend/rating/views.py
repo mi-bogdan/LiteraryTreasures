@@ -1,6 +1,8 @@
+from yaml import serialize
 from base.action_mixin import MixedSerializer
 from book.models import Book
 from django.shortcuts import render
+from django.core.cache import cache
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -12,7 +14,15 @@ from .serializers import RatingSerializer, RatingStarsSerializer
 class StarsView(generics.ListAPIView):
     serializer_class = RatingStarsSerializer
     permission_classes = (AllowAny,)
-    queryset = RatingStars.objects.all()
+
+    def get_queryset(self):
+        cache_data = cache.get('stars')
+        if not cache_data:
+            queryset = RatingStars.objects.all()
+            serializer = self.get_serializer(queryset, many=True)
+            cache_data = serializer.data
+            cache.set('stars', cache_data, timeout=60 * 15)
+        return cache_data
 
 
 class RatingView(MixedSerializer, generics.GenericAPIView):

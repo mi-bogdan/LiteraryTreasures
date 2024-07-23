@@ -5,12 +5,19 @@ from rest_framework import serializers
 from .models import Book, Category, ImageBook
 
 
+class CategoryChildrenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('id', 'title')
+
+
 class CategorySerializer(serializers.ModelSerializer):
+    """Список категорий"""
     subcategories = serializers.SerializerMethodField(read_only=True)
 
     def get_subcategories(self, category) -> serializers.ReturnList | Any | serializers.ReturnDict:
-        subcategories = Category.objects.filter(parent=category)
-        serializer = CategorySerializer(subcategories, many=True)
+        subcategories = category.children.all()
+        serializer = CategoryChildrenSerializer(subcategories, many=True)
         return serializer.data
 
     class Meta:
@@ -19,6 +26,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ListBookSerializer(serializers.ModelSerializer):
+    """Список книг"""
     review_count = serializers.IntegerField()
     average_rating = serializers.FloatField()
 
@@ -28,6 +36,7 @@ class ListBookSerializer(serializers.ModelSerializer):
 
 
 class DeteilBookSerializer(serializers.ModelSerializer):
+    """Подробная информация о книге"""
     category = CategorySerializer()
     review_count = serializers.IntegerField()
     average_rating = serializers.FloatField()
