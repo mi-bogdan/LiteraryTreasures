@@ -51,6 +51,8 @@ class RemoveFavouritesViews(APIView):
 
 
 class ListFavouritesBookViews(APIView):
+    """Вывод товара в избранное"""
+    
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
@@ -58,5 +60,4 @@ class ListFavouritesBookViews(APIView):
         books_ids = redis_client_favourites.smembers(f'user:{user_id}:favourites')
         books = Book.objects.filter(id__in=books_ids)
         serializer = ListBookSerializer(books, many=True)
-        print(books_ids)
         return Response(serializer.data, status=status.HTTP_200_OK)
