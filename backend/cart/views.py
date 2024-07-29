@@ -60,7 +60,7 @@ class CartAPIView(APIView):
             response.data = {'message': 'Изменено кол-во единиц товара'}
             return response
         else:
-            return self.delete(request)  
+            return self.delete(request)
 
     def get(self, request):
         response = Response(status=status.HTTP_200_OK)

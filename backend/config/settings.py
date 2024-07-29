@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "authentications.apps.AuthenticationsConfig",
     "favourites.apps.FavouritesConfig",
     "cart.apps.CartConfig",
+    "orders.apps.OrdersConfig",
 ]
 
 MIDDLEWARE = [
