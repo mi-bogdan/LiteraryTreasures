@@ -58,5 +58,12 @@
 
 После этого API объявлений будет доступен по адресу http://localhost:8000/.
 
+### Библиотека
+**Ссылки**:
+- [Yookasa] https://yookassa.ru/my/merchant/integration/http-notifications
+- [ngrok] https://ngrok.com/
+
+
+
 
 Copyright (c) 2024-present, - Shnyra Bogdan
