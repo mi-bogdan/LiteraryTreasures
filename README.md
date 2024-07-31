@@ -62,7 +62,7 @@
 **Ссылки**:
 - [Yookasa] https://yookassa.ru/my/merchant/integration/http-notifications
 - [ngrok] https://ngrok.com/
-- [Github-Yookasa]https://github.com/yoomoney/yookassa-sdk-python
+- [Github-Yookasa] https://github.com/yoomoney/yookassa-sdk-python
 
 
 
